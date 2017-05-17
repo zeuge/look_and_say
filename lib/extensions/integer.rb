@@ -10,10 +10,11 @@ module Extensions
     def look_and_say
       Enumerator.new do |enum|
         number = self
+        sign = number < 0 ? -1 : 1
 
         loop do
           enum << number
-          number = number.next_sequence_number
+          number = sign * number.next_sequence_number
         end
       end
     end
@@ -24,7 +25,8 @@ module Extensions
     #
     # Returns Integer
     def next_sequence_number
-      to_s.
+      abs.
+        to_s.
         chars.
         chunk { |char| char }.
         map { |number, ary| [ary.length, number] }.
